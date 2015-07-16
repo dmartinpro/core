@@ -99,7 +99,7 @@ class cache {
 	}
 
 	public static function clean() {
-		$sql = "DELETE FROM `cache`  WHERE (UNIX_TIMESTAMP(`datetime`) + lifetime) < UNIX_TIMESTAMP(NOW()) AND lifetime > 0";
+		$sql = "DELETE FROM `cache`  WHERE (strftime('%s',`datetime`) + lifetime) < strftime('%s','now') AND lifetime > 0";
 		DB::Prepare($sql, array(), DB::FETCH_TYPE_ROW);
 		$sql = "SELECT * FROM `cache`  WHERE `key` LIKE 'cmd%' AND lifetime = 0";
 		$results = DB::Prepare($sql, array(), DB::FETCH_TYPE_ALL);
@@ -182,12 +182,8 @@ class cache {
 			'lifetime' => $this->getLifetime(),
 			'options' => $this->options,
 		);
-		$sql = 'REPLACE cache
-        SET `key`=:key,
-        `value`=:value,
-        `datetime`=:datetime,
-        `lifetime`=:lifetime,
-        `options`=:options';
+		$sql = 'REPLACE INTO `cache` (`key`,`value`,`datetime`,`lifetime`,`options`)
+		VALUES (:key,:value,:datetime,:lifetime,:options)';
 		return DB::Prepare($sql, $values, DB::FETCH_TYPE_ROW);
 	}
 

@@ -211,7 +211,7 @@ class user {
 		$sql = 'SELECT count(id) as nb
         FROM user
         WHERE login="admin"
-        AND password=SHA1("admin")
+        AND password="' . sha1('admin') . '"
         AND `enable` = 1';
 		$result = DB::Prepare($sql, array(), DB::FETCH_TYPE_ROW);
 		return $result['nb'];

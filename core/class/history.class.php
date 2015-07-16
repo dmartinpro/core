@@ -158,7 +158,7 @@ class history {
 						);
 
 						$sql = 'SELECT ' . $mode . '(value) as value,
-						FROM_UNIXTIME(AVG(UNIX_TIMESTAMP(`datetime`))) as datetime
+						FROM_UNIXTIME(AVG(strftime("%s",(`datetime`))) as datetime
 						FROM history
 						WHERE TIMEDIFF(`datetime`,:oldest)<:archivePackage
 						AND cmd_id=:cmd_id';

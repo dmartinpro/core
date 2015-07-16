@@ -182,7 +182,7 @@ class cron {
 	}
 
 	public static function ok() {
-		$sql = 'SELECT UNIX_TIMESTAMP(max(`lastRun`)) as `time`
+		$sql = 'SELECT strftime("%s",max(`lastRun`)) as `time`
         FROM cron';
 		$result = DB::Prepare($sql, array(), DB::FETCH_TYPE_ROW);
 		if ((strtotime('now') - $result['time']) > 3600) {

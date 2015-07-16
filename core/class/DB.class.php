@@ -33,7 +33,7 @@ class DB {
 	/*     * **************  Fonctions statiques  ***************** */
 
 	private function __construct() {
-		if (true) {
+		if (false) {
 			global $CONFIG;
 			try {
 				$this->connection = new PDO('mysql:host=' . $CONFIG['db']['host'] . ';port=' . $CONFIG['db']['port'] . ';dbname=' . $CONFIG['db']['dbname'], $CONFIG['db']['username'], $CONFIG['db']['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_PERSISTENT => true));
@@ -51,9 +51,9 @@ class DB {
 				$this->connection = new PDO('mysql:host=' . $CONFIG['db']['host'] . ';port=' . $CONFIG['db']['port'] . ';dbname=' . $CONFIG['db']['dbname'], $CONFIG['db']['username'], $CONFIG['db']['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::ATTR_PERSISTENT => true));
 			}
 		} else {
-			$this->connection = new PDO('sqlite:' . dirname(__FILE__) . '/../../jeedom.db');
+			$this->connection = new PDO('sqlite:' . dirname(__FILE__) . '/../../jeedom.db', 'charset=UTF-8');
 			$this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
+			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
 		}
 	}
 
